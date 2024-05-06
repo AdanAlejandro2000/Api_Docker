@@ -5,7 +5,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/AdanAlejandro2000/Api_Docker.git'
-
             }
         }
         stage('Build') {
@@ -15,7 +14,7 @@ pipeline {
         }
         stage('Push') {
             steps {
-                echo 'El pipeline se ejecutó correctamente'
+                sh 'docker push alecampos2000/mi-aplicacion-go:sha256-1'
             }
         }
     }
