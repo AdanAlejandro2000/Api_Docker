@@ -1,4 +1,4 @@
-# Usa una imagen de Go como base para compilar la aplicación
+# Use la imagen de Go como base
 FROM golang:latest AS builder
 
 # Establece el directorio de trabajo dentro del contenedor
@@ -7,21 +7,11 @@ WORKDIR /app
 # Copia el código fuente al directorio de trabajo dentro del contenedor
 COPY golan-rest-simple /app
 
-
-# Descarga e instala las dependencias necesarias (en este caso, solo Gorilla Mux)
-RUN go mod init app && go get -u github.com/gorilla/mux
+# Instala las dependencias
+RUN go get -u github.com/gorilla/mux
 
 # Compila el código de Go dentro del contenedor
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
-
-# Usa una imagen ligera como base para la ejecución de la aplicación
-FROM alpine:latest
-
-# Establece el directorio de trabajo dentro del contenedor
-WORKDIR /root/
-
-# Copia el binario compilado desde el primer contenedor
-COPY --from=builder /app/main .
+RUN go build -o main .
 
 # Exponer el puerto en el que se ejecutará la aplicación
 EXPOSE 8080
