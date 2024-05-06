@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Descarga e instala las dependencias necesarias (en este caso, solo Gorilla Mux)
-RUN go get -u github.com/gorilla/mux
+RUN go install -u github.com/gorilla/mux
 
 # Compila el código de Go dentro del contenedor
 RUN go build -o main .
