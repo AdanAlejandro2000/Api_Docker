@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_IMAGE = "alecampos2000/mi-aplicacion-go:sha256-${BUILD_ID}"
+        DOCKERFILE_PATH = "golan-rest-simple/Dockerfile"
+    }
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Construir la imagen Docker
+                    sh "docker build -f ${DOCKERFILE_PATH} -t ${DOCKER_IMAGE} ."
+                }
+            }
+        }
+        stage('Push') {
+            steps {
+                script {
+                    // Empujar la imagen Docker al registro
+                    sh "docker push ${DOCKER_IMAGE}"
+                }
+            }
+        }
+    }
+    post {
+        always {
+            // Limpieza: eliminar la imagen local después de la construcción
+            cleanWs()
+        }
+    }
+}
