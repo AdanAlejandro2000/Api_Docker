@@ -5,7 +5,8 @@ FROM golang:latest AS builder
 WORKDIR /app
 
 # Copia el código fuente al directorio de trabajo dentro del contenedor
-COPY . .
+COPY Api_Docker/golan-rest-simple /app
+
 
 # Descarga e instala las dependencias necesarias (en este caso, solo Gorilla Mux)
 RUN go mod init app && go get -u github.com/gorilla/mux
