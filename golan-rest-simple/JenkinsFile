@@ -14,9 +14,7 @@ pipeline {
         }
         stage('Push') {
             steps {
-                // Push de la imagen Docker a un registro si es necesario
-                // Por ejemplo:
-                // sh 'docker push alecampos2000/mi-aplicacion-go:sha256-1'
+                echo 'El pipeline se ejecutó correctamente'
             }
         }
     }
