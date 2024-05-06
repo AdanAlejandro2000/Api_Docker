@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/AdanAlejandro2000/Api_Docker.git'
+                git branch: 'main', url: 'https://github.com/AdanAlejandro2000/Api_Docker.git'
+
             }
         }
         stage('Build') {
