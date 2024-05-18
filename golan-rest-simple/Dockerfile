@@ -1,20 +1,17 @@
-# Use la imagen de Go como base
-FROM golang:latest AS builder
+# Usar una imagen base de Golang
+FROM golang:alpine
 
-# Establece el directorio de trabajo dentro del contenedor
+# Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el código fuente al directorio de trabajo dentro del contenedor
-COPY golan-rest-simple /app
+# Copiar el código fuente al directorio de trabajo dentro del contenedor
+COPY . /app
 
-# Instala las dependencias
-RUN go get -u github.com/gorilla/mux
+# Instalar las dependencias
+RUN go mod tidy
 
-# Compila el código de Go dentro del contenedor
+# Compilar la aplicación
 RUN go build -o main .
 
-# Exponer el puerto en el que se ejecutará la aplicación
-EXPOSE 8080
-
-# Ejecutar la aplicación cuando el contenedor se inicie
+# Especificar el comando para ejecutar la aplicación
 CMD ["./main"]
