@@ -21,7 +21,6 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
-
 stages:
 - stage: Build
   displayName: Build stage
@@ -29,7 +28,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: $(vmImageName)
+      name: Adan1  # Nombre del pool de agentes auto hospedado
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -41,18 +40,19 @@ stages:
         tags: |
           $(tag)
 
-    - upload: manifests
-      artifact: manifests
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: 'manifests'  # Directorio donde están los manifiestos
+        artifact: 'manifests'
 
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
-
   jobs:
   - deployment: Deploy
     displayName: Deploy
     pool:
-      vmImage: $(vmImageName)
+      name: Adan1  # Nombre del pool de agentes auto hospedado
     environment: 'AdanAlejandro2000ApiDocker.default'
     strategy:
       runOnce:
@@ -76,4 +76,3 @@ stages:
                 $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
-
