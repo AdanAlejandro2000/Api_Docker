@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mi-aplicacion
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mi-aplicacion
+  template:
+    metadata:
+      labels:
+        app: mi-aplicacion
+    spec:
+      containers:
+        - name: mi-aplicacion
+          image: alecampos2000/mi-aplicacion-go:latest
+          ports:
+            - containerPort: 80
