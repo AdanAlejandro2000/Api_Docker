@@ -9,7 +9,6 @@ resources:
 - repo: self
 
 variables:
-
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '0516288f-4ac0-4634-be41-bc64f05f79f5'
   imageRepository: 'adanalejandroapidocker'
@@ -17,7 +16,6 @@ variables:
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'adan1c0c2-auth'
-
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
@@ -39,7 +37,6 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: 'manifests'  # Directorio donde están los manifiestos
@@ -64,7 +61,6 @@ stages:
               action: createSecret
               secretName: $(imagePullSecret)
               dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
-
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:
