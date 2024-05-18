@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: adanalejandroapidocker 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adanalejandroapidocker
+  template:
+    metadata:
+      labels:
+        app: adanalejandroapidocker 
+    spec:
+      containers:
+        - name: adanalejandroapidocker 
+          image: adan1.azurecr.io/adanalejandroapidocker
+          ports:
+          - containerPort: 8080
